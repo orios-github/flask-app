@@ -34,22 +34,24 @@ pipeline {
                     """
                 }
             }
-        }
-
+        }   
         stage('Update Manifest') {
             steps {
-                sh """
-                  sed -i "s|image: oscar8899/flask-app:.*|image: oscar8899/flask-app:v${BUILD_NUMBER}|g" k8s/deployment.yaml
-                  git config --global user.email "jenkins@ci.local"
-                  git config --global user.name "Jenkins CI"
-                  git checkout master   # or main
-                  git add k8s/deployment.yaml
-                  git commit -m "Update image tag to v${BUILD_NUMBER}" || echo "No changes"
-                  git push origin master
-                """
+                withCredentials([usernamePassword(credentialsId: 'jenkins-push-token',
+                                          usernameVariable: 'GIT_USER',
+                                          passwordVariable: 'GIT_PASS')]) {
+                    sh """
+                      sed -i "s|image: oscar8899/flask-app:.*|image: oscar8899/flask-app:v${BUILD_NUMBER}|g" k8s/deployment.yaml
+                      git config --global user.email "jenkins@ci.local"
+                      git config --global user.name "Jenkins CI"
+                      git checkout master
+                      git add k8s/deployment.yaml
+                      git commit -m "Update image tag to v${BUILD_NUMBER}" || echo "No changes"
+                      git push https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master
+                    """
+                }
             }
         }
-
         stage('Deploy') {
             steps {
                 sh """
@@ -60,6 +62,7 @@ pipeline {
         }
     }
 }
+
 
 
 
