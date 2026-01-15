@@ -7,7 +7,7 @@ pipeline {
                 checkout([$class: 'GitSCM',
                       branches: [[name: '*/master']],   // or master
                       userRemoteConfigs: [[url: 'git@github.com:orios-github/flask-app.git',
-                               credentialsId: 'github-credential']]])
+                               credentialsId: 'Github-SSH-key']]])
             }
         }       
         stage('Build') {
@@ -50,6 +50,7 @@ pipeline {
     }
 
 }
+
 
 
 
