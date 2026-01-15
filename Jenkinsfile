@@ -3,7 +3,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build --no-cache -t oscar8899/flask-app:latest .'
+                script {
+                    def IMAGE_TAG = "v${env.BUILD_NUMBER}"
+                    sh "docker build -t oscar8899/flask-app:${IMAGE_TAG} ."
+                    sh "docker push oscar8899/flask-app:${IMAGE_TAG}"
+                }
             }
         }
         stage('Push') {
@@ -26,5 +30,6 @@ pipeline {
     }
 
 }
+
 
 
