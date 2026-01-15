@@ -41,6 +41,16 @@ pipeline {
                     """
                 }
             }
+            steps {
+                sh '''
+                  sed -i "s|image: oscar8899/flask-app:.*|image: oscar8899/flask-app:${VERSION}|g" k8s/deployment.yaml
+                  git config --global user.email "jenkins@ci.local"
+                  git config --global user.name "Jenkins CI"
+                  git add k8s/deployment.yaml || true
+                  git commit -m "Update image tag to ${VERSION}" || echo "No changes to commit"
+                  git push origin HEAD:master || echo "Skipping push (detached HEAD)"
+                '''
+            }
         }
         stage('Deploy') {
             steps {
@@ -48,12 +58,12 @@ pipeline {
         	export KUBECONFIG=/var/lib/jenkins/.kube/config
         	kubectl apply -f k8s/deployment.yaml
         	'''
-
             }
         }
     }
 
 }
+
 
 
 
