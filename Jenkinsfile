@@ -16,7 +16,11 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'kubectl apply -f k8s-deployment.yaml'
+                sh '''
+        	export KUBECONFIG=/var/lib/jenkins/.kube/config
+        	kubectl apply -f k8s-deployment.yaml
+        	'''
+
             }
         }
     }
