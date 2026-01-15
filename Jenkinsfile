@@ -1,15 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                // This ensures Jenkins is on a branch, not detached HEAD
-                checkout([$class: 'GitSCM',
-                  branches: [[name: '*/master']],   // or master
-                  userRemoteConfigs: [[url: 'https://github.com/orios-github/flask-app.git',
-                               credentialsId: 'github-credential']]])
-            }
-        }     
         stage('Build') {
             steps {
                 script {
@@ -45,11 +36,15 @@ pipeline {
         	export KUBECONFIG=/var/lib/jenkins/.kube/config
         	kubectl apply -f k8s/deployment.yaml
         	'''
+
             }
         }
     }
 
 }
+
+
+
 
 
 
