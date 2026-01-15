@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t oscar8899/flask-app:latest .'
+                sh 'docker build --no-cache -t oscar8899/flask-app:latest .'
             }
         }
         stage('Push') {
@@ -26,4 +26,5 @@ pipeline {
     }
 
 }
+
 
