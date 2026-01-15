@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: oscar8899/flask-app:v1
+        image: oscar8899/flask-app:v8
         ports:
         - containerPort: 5000
