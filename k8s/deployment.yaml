@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: oscar8899/flask-app:latest   # Jenkins will replace this
+        image: oscar8899/flask-app:v33
         ports:
         - containerPort: 5000
 ---
