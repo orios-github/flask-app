@@ -11,7 +11,7 @@ pipeline {
                 checkout([$class: 'GitSCM',
                           branches: [[name: '*/master']], // or main
                           userRemoteConfigs: [[url: 'https://github.com/orios-github/flask-app.git',
-                                               credentialsId: 'github-credential']]])
+                                               credentialsId: 'jenkins-push-token']]])
             }
         }
 
@@ -38,14 +38,16 @@ pipeline {
         stage('Update Manifest') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'jenkins-push-token',
-                                          usernameVariable: 'GIT_USER',
-                                          passwordVariable: 'GIT_PASS')]) {
+                                                  usernameVariable: 'GIT_USER',
+                                                  passwordVariable: 'GIT_PASS')]) {
                     sh """
                       sed -i "s|image: oscar8899/flask-app:.*|image: oscar8899/flask-app:v${BUILD_NUMBER}|g" k8s/deployment.yaml
                       git config --global user.email "jenkins@ci.local"
                       git config --global user.name "Jenkins CI"
+                      git checkout -B master origin/master
                       git add k8s/deployment.yaml
                       git commit -m "Update image tag to v${BUILD_NUMBER}" || echo "No changes"
+                      git pull --rebase https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master
                       git push https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master
                     """
                 }
@@ -61,6 +63,7 @@ pipeline {
         }
     }
 }
+
 
 
 
