@@ -5,9 +5,9 @@ pipeline {
             steps {
                 // This ensures Jenkins is on a branch, not detached HEAD
                 checkout([$class: 'GitSCM',
-                          branches: [[name: '*/master']],   // or your branch name
-                          userRemoteConfigs: [[url: 'git@github.com:orios-github/flask-app.git']]
-                         ])
+                      branches: [[name: '*/master']],   // or master
+                      userRemoteConfigs: [[url: 'git@github.com:orios-github/flask-app.git',
+                               credentialsId: 'github-credential']]])
             }
         }       
         stage('Build') {
@@ -50,6 +50,7 @@ pipeline {
     }
 
 }
+
 
 
 
