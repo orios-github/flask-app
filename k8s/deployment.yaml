@@ -1,34 +1,38 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: flask-app
-  labels:
-    app: flask-app
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: flask-app
-  template:
-    metadata:
-      labels:
-        app: flask-app
-    spec:
-      containers:
-      - name: flask-app
-        image: oscar8899/flask-app:v39
-        ports:
-        - containerPort: 5000
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: flask-app              # Name of the Deployment resource
+  labels:  
+    app: flask-app             # Label to identify this Deployment
+
+spec:  
+  replicas: 2                  # Run 2 replicas (pods) of the application for high availability
+  selector:  
+    matchLabels:  
+      app: flask-app           # Match pods with label "app=flask-app"
+
+  template:  
+    metadata:  
+      labels:  
+        app: flask-app         # Apply the same label to pods created by this Deployment
+    spec:  
+      containers:  
+      - name: flask-app        # Name of the container inside the pod
+        image: oscar8899/flask-app:v39   # Docker image to run (version v39)
+        ports:  
+        - containerPort: 5000  # Expose port 5000 inside the container (Flask app listens here)
+
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: flask-app-service
-spec:
-  selector:
-    app: flask-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 5000
-  type: LoadBalancer
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: flask-app-service      # Name of the Service resource
+
+spec:  
+  selector:  
+    app: flask-app             # Route traffic to pods with label "app=flask-app"
+  ports:  
+    - protocol: TCP  
+      port: 80                 # Expose service on port 80 (standard HTTP port)
+      targetPort: 5000         # Forward traffic to container’s port 5000
+  type: LoadBalancer           # Provision a cloud load balancer to expose the service externally
