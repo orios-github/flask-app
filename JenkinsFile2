@@ -1,23 +1,23 @@
 pipeline {
-    agent any   // Run the pipeline on any available Jenkins agent
+    agent any               // Run the pipeline on any available Jenkins agent
 
     environment {
-        VERSION = "v${BUILD_NUMBER}" // Define an environment variable VERSION using Jenkins build number
+        VERSION = "v${BUILD_NUMBER}"             // Define an environment variable VERSION using Jenkins build number
     }
 
     stages {
         stage('Checkout') {
             steps {
                 checkout([$class: 'GitSCM',
-                          branches: [[name: '*/master']], // Checkout the master branch (or main if renamed)
+                          branches: [[name: '*/master']],         // Checkout the master branch (or main if renamed)
                           userRemoteConfigs: [[url: 'https://github.com/orios-github/flask-app.git',
-                                               credentialsId: 'jenkins-push-token']]]) // Use stored GitHub credentials
+                                               credentialsId: 'jenkins-push-token']]])     // Use stored GitHub credentials
             }
         }
 
         stage('Build') {
             steps {
-                sh "docker build -t oscar8899/flask-app:${VERSION} ."     // Build Docker image tagged with the current VERSION (e.g., v12)
+                sh "docker build -t oscar8899/flask-app:${VERSION} ."         // Build Docker image tagged with the current VERSION (e.g., v12)
             }
         }
 
@@ -27,10 +27,10 @@ pipeline {
                                                  usernameVariable: 'USER',
                                                  passwordVariable: 'PASS')]) {
                     sh """
-                      echo $PASS | docker login -u $USER --password-stdin  // Authenticate to DockerHub securely
-                      docker push oscar8899/flask-app:${VERSION}           // Push versioned image to DockerHub
+                      echo $PASS | docker login -u $USER --password-stdin          // Authenticate to DockerHub securely
+                      docker push oscar8899/flask-app:${VERSION}                   // Push versioned image to DockerHub
                       docker tag oscar8899/flask-app:${VERSION} oscar8899/flask-app:latest   // Tag image as 'latest'
-                      docker push oscar8899/flask-app:latest               // Push 'latest' tag to DockerHub
+                      docker push oscar8899/flask-app:latest                       // Push 'latest' tag to DockerHub
                     """
                 }
             }
@@ -42,20 +42,16 @@ pipeline {
                                                   usernameVariable: 'GIT_USER',
                                                   passwordVariable: 'GIT_PASS')]) {
                     sh """
-                      sed -i "s|image: oscar8899/flask-app:.*|image: oscar8899/flask-app:v${BUILD_NUMBER}|g" k8s/deployment.yaml
-                      // Update Kubernetes deployment.yaml with the new image version
-
-                      git config --global user.email "jenkins@ci.local"  // Configure Git user email
-                      git config --global user.name "Jenkins CI"         // Configure Git username
-                      git checkout -B master origin/master               // Ensure working on master branch
-                      git add k8s/deployment.yaml                        // Stage updated manifest file
+                      sed -i "s|image: oscar8899/flask-app:.*|image: oscar8899/flask-app:v${BUILD_NUMBER}|g" k8s/deployment.yaml     // Update Kubernetes deployment.yaml with the new image version
+                      git config --global user.email "jenkins@ci.local"      // Configure Git user email
+                      git config --global user.name "Jenkins CI"             // Configure Git username
+                      git checkout -B master origin/master                   // Ensure working on master branch
+                      git add k8s/deployment.yaml                            // Stage updated manifest file
                       git commit -m "Update image tag to v${BUILD_NUMBER}" || echo "No changes"  // Commit changes (skip if no diff)
 
-                      git pull --rebase https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master
-                      // Rebase with remote master to avoid conflicts
+                      git pull --rebase https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master     // Rebase with remote master to avoid conflicts
 
-                      git push https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master
-                      // Push updated manifest back to GitHub
+                      git push https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master     // Push updated manifest back to GitHub
                     """
                 }
             }
@@ -64,8 +60,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                  export KUBECONFIG=/var/lib/jenkins/.kube/config // Point kubectl to Jenkins' kubeconfig
-                  kubectl apply -f k8s/deployment.yaml            // Apply updated manifest to Kubernetes cluster
+                  export KUBECONFIG=/var/lib/jenkins/.kube/config         // Point kubectl to Jenkins' kubeconfig
+                  kubectl apply -f k8s/deployment.yaml                    // Apply updated manifest to Kubernetes cluster
                 """
             }
         }
