@@ -48,9 +48,7 @@ pipeline {
                       git checkout -B master origin/master                   // Ensure working on master branch
                       git add k8s/deployment.yaml                            // Stage updated manifest file
                       git commit -m "Update image tag to v${BUILD_NUMBER}" || echo "No changes"  // Commit changes (skip if no diff)
-
                       git pull --rebase https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master     // Rebase with remote master to avoid conflicts
-
                       git push https://${GIT_USER}:${GIT_PASS}@github.com/orios-github/flask-app.git master     // Push updated manifest back to GitHub
                     """
                 }
