@@ -23,16 +23,21 @@ pipeline {
 
         stage('Push') {
             steps {
-                sh """
-                  echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin          
-                  docker push oscar8899/flask-app:${VERSION}                   
-                  docker tag oscar8899/flask-app:${VERSION} oscar8899/flask-app:latest   
-                  docker push oscar8899/flask-app:latest                       
-                """
-                // Authenticate to DockerHub securely
-                // Push versioned image to DockerHub
-                // Tag image as 'latest'
-                // Push 'latest' tag to DockerHub
+                 withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
+                                         usernameVariable: 'DOCKER_USER',
+                                         passwordVariable: 'DOCKER_PASS')]) 
+                {
+                    sh """
+                      echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin          
+                      docker push oscar8899/flask-app:${VERSION}                   
+                      docker tag oscar8899/flask-app:${VERSION} oscar8899/flask-app:latest   
+                      docker push oscar8899/flask-app:latest                       
+                    """
+                    // Authenticate to DockerHub securely
+                    // Push versioned image to DockerHub
+                    // Tag image as 'latest'
+                    // Push 'latest' tag to DockerHub
+                 }
             }
         }   
 
