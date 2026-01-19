@@ -50,3 +50,7 @@ env:
       name: dockerhub-cred
       key: password
 
+
+envFrom:
+    - secretRef:
+        name: dockerhub-cred
