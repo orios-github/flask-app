@@ -10,7 +10,7 @@ app = Flask(__name__)
 # When a client visits http://<host>:5000/hello, this function will be executed.
 
 def hello():  
-    return "Hello!!, this is a newer version: v40."  
+    return "Hello!!, this is a newer version: v43. Hi Bruno."  
     # Function that returns a plain text response to the client
 
 if __name__ == "__main__":  
@@ -18,6 +18,7 @@ if __name__ == "__main__":
     # Run the Flask development server if this file is executed directly.
     # host="0.0.0.0" makes the app accessible externally (not just localhost).
     # port=5000 specifies the port where the app will listen.
+
 
 
 
