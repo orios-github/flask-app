@@ -5,6 +5,10 @@ pipeline {
         VERSION = "v${BUILD_NUMBER}"             // Define an environment variable VERSION using Jenkins build number
     }
 
+    envFrom:
+    - secretRef:
+        name: dockerhub-cred
+
     stages {
         stage('Checkout') {
             steps {
@@ -23,20 +27,16 @@ pipeline {
 
         stage('Push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'oscar8899-dockerHub',
-                                                 usernameVariable: 'USER',
-                                                 passwordVariable: 'PASS')]) {
-                    sh """
-                      echo $PASS | docker login -u $USER --password-stdin          
-                      docker push oscar8899/flask-app:${VERSION}                   
-                      docker tag oscar8899/flask-app:${VERSION} oscar8899/flask-app:latest   
-                      docker push oscar8899/flask-app:latest                       
-                    """
-                    // Authenticate to DockerHub securely
-                    // Push versioned image to DockerHub
-                    // Tag image as 'latest'
-                    // Push 'latest' tag to DockerHub
-                }
+                sh """
+                  echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin          
+                  docker push oscar8899/flask-app:${VERSION}                   
+                  docker tag oscar8899/flask-app:${VERSION} oscar8899/flask-app:latest   
+                  docker push oscar8899/flask-app:latest                       
+                """
+                // Authenticate to DockerHub securely
+                // Push versioned image to DockerHub
+                // Tag image as 'latest'
+                // Push 'latest' tag to DockerHub
             }
         }   
 
