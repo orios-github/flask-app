@@ -22,6 +22,19 @@ spec:
         ports:  
         - containerPort: 5000  # Expose port 5000 inside the container (Flask app listens here)
 
+#Credentials
+env:
+- name: DOCKER_USER
+  valueFrom:
+    secretKeyRef:
+      name: dockerhub-cred
+      key: username
+- name: DOCKER_PASS
+  valueFrom:
+    secretKeyRef:
+      name: dockerhub-cred
+      key: password
+
 ---
 apiVersion: v1  
 kind: Service  
@@ -37,20 +50,4 @@ spec:
       targetPort: 5000         # Forward traffic to container’s port 5000
   type: LoadBalancer           # Provision a cloud load balancer to expose the service externally
 
-#Credentials
-env:
-- name: DOCKER_USER
-  valueFrom:
-    secretKeyRef:
-      name: dockerhub-cred
-      key: username
-- name: DOCKER_PASS
-  valueFrom:
-    secretKeyRef:
-      name: dockerhub-cred
-      key: password
 
-
-envFrom:
-    - secretRef:
-        name: dockerhub-cred
