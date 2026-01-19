@@ -27,7 +27,7 @@ pipeline {
                                                  passwordVariable: 'PASS')]) 
                 {
                     sh """
-                      echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin          
+                      echo $PASS | docker login -u $USER --password-stdin          
                       docker push oscar8899/flask-app:${VERSION}                   
                       docker tag oscar8899/flask-app:${VERSION} oscar8899/flask-app:latest   
                       docker push oscar8899/flask-app:latest                       
