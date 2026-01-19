@@ -22,7 +22,8 @@ pipeline {
         }
 
         stage('Push') {
-            withCredentials([usernamePassword(credentialsId: 'oscar8899-dockerHub',
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'oscar8899-dockerHub',
                                                  usernameVariable: 'USER',
                                                  passwordVariable: 'PASS')]) 
                 {
@@ -36,7 +37,7 @@ pipeline {
                     // Push versioned image to DockerHub
                     // Tag image as 'latest'
                     // Push 'latest' tag to DockerHub
-                 }
+                }
             }
         }   
 
