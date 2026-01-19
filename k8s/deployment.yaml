@@ -36,3 +36,17 @@ spec:
       port: 80                 # Expose service on port 80 (standard HTTP port)
       targetPort: 5000         # Forward traffic to container’s port 5000
   type: LoadBalancer           # Provision a cloud load balancer to expose the service externally
+
+#Credentials
+env:
+- name: DOCKER_USER
+  valueFrom:
+    secretKeyRef:
+      name: dockerhub-cred
+      key: username
+- name: DOCKER_PASS
+  valueFrom:
+    secretKeyRef:
+      name: dockerhub-cred
+      key: password
+
