@@ -5,10 +5,6 @@ pipeline {
         VERSION = "v${BUILD_NUMBER}"             // Define an environment variable VERSION using Jenkins build number
     }
 
-    envFrom:
-    - secretRef:
-        name: dockerhub-cred
-
     stages {
         stage('Checkout') {
             steps {
