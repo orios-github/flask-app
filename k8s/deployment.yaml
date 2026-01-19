@@ -22,19 +22,6 @@ spec:
         ports:  
         - containerPort: 5000  # Expose port 5000 inside the container (Flask app listens here)
 
-#Credentials
-env:
-- name: DOCKER_USER
-  valueFrom:
-    secretKeyRef:
-      name: dockerhub-cred
-      key: username
-- name: DOCKER_PASS
-  valueFrom:
-    secretKeyRef:
-      name: dockerhub-cred
-      key: password
-
 ---
 apiVersion: v1  
 kind: Service  
