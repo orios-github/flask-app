@@ -10,7 +10,7 @@ app = Flask(__name__)
 # When a client visits http://<host>:5000/hello, this function will be executed.
 
 def hello():  
-    return "Hello COPS team! This is a newer version. latest"  
+    return "Hello COPS team! This is a newer version. latest versionnn"  
     # Function that returns a plain text response to the client
 
 if __name__ == "__main__":  
