@@ -18,7 +18,7 @@ spec:
     spec:  
       containers:  
       - name: flask-app        # Name of the container inside the pod
-        image: oscar8899/flask-app:v49 ##current version
+        image: oscar8899/flask-app:v49
         ports:  
         - containerPort: 5000  # Expose port 5000 inside the container (Flask app listens here)
 
