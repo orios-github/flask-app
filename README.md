@@ -1,7 +1,9 @@
-DevOps Mini–Project: CI/CD with AWS, Jenkins, and ArgoCD
+DevOps Mini–Project: CI/CD with AWS, Jenkins, and ArgoCD  
+
 
 Objective
-Build and deploy a simple application (Python Flask REST API) on AWS using a fully automated CI/CD pipeline with Jenkins and ArgoCD, leveraging the AWS free tier.
+Build and deploy a simple application (Python Flask REST API) on AWS using a fully automated CI/CD pipeline with Jenkins and ArgoCD, leveraging the AWS free tier.  
+
 
 Main Components
 - Application: Flask API with a /hello endpoint returning "Hello DevOps!".
@@ -12,10 +14,11 @@ Main Components
 - Jenkins: Builds and packages the Docker image.
 - ArgoCD: Automates deployment to Kubernetes.
 
+
 Architecture
 flowchart TD  
 
-[GitHub Repo] --> [Jenkins CI/CD] --> C[Docker Image] --> D[AWS EKS Cluster] --> E[ArgoCD Deployment] --> F[Flask API /hello]
+[GitHub Repo] --> [Jenkins CI/CD] --> [Docker Image] --> [AWS EKS Cluster] --> [ArgoCD Deployment] --> [Flask API /hello]
 
 
 Repository Structure
@@ -39,6 +42,7 @@ Key Features
 - Scalable: Kubernetes manages application lifecycle and scaling.
 - Cost-efficient: Built entirely on AWS free tier resources.
   
+  
 How to Test
 - Clone the repository:
 git clone https://github.com/username/devops-mini-project.git
@@ -49,6 +53,7 @@ python main.py
 - Access at http://localhost:5000/hello.
 - Review Jenkins pipeline execution and ArgoCD deployment.
   
+  
 Professional Value
 This project demonstrates hands-on expertise in:
 - CI/CD pipelines with Jenkins
@@ -57,6 +62,7 @@ This project demonstrates hands-on expertise in:
 - GitOps practices with ArgoCD
 - Cloud deployment on AWS
 It serves as a practical showcase of automation, reliability, and modern cloud-native deployment practices—ideal for recruiters and interview discussions.
+
 
 
 <img width="724" height="475" alt="image" src="https://github.com/user-attachments/assets/3b4faf97-a109-4170-8336-a7b7eb317030" />
