@@ -14,17 +14,17 @@ Main Components
 
 Architecture
 ##flowchart TD
-    [GitHub Repo] --> [Jenkins CI/CD] --> C[Docker Image] --> D[AWS EKS Cluster] --> E[ArgoCD Deployment] --> F[Flask API /hello]
+##    [GitHub Repo] --> [Jenkins CI/CD] --> C[Docker Image] --> D[AWS EKS Cluster] --> E[ArgoCD Deployment] --> F[Flask API /hello]
 
 
 ##Repository Structure
-├── app/
-│   └── main.py          # Flask application code
-├── Dockerfile           # Docker image definition
-├── manifests/
-│   └── deployment.yaml  # Kubernetes manifest
-├── Jenkinsfile          # CI/CD pipeline
-└── README.md            # Documentation
+##├── app/
+##│   └── main.py          # Flask application code
+##├── Dockerfile           # Docker image definition
+##├── manifests/
+##│   └── deployment.yaml  # Kubernetes manifest
+##├── Jenkinsfile          # CI/CD pipeline
+##└── README.md            # Documentation
 
 
 Key Features
