@@ -13,17 +13,12 @@ Main Components
 - ArgoCD: Automates deployment to Kubernetes.
 
 Architecture
-flowchart TD
-    A[GitHub Repo] --> B[Jenkins CI/CD]
-    B --> C[Docker Image]
-    C --> D[AWS EKS Cluster]
-    D --> E[ArgoCD Deployment]
-    E --> F[Flask API /hello]
+##flowchart TD
+    [GitHub Repo] --> [Jenkins CI/CD] --> C[Docker Image] --> D[AWS EKS Cluster] --> E[ArgoCD Deployment] --> F[Flask API /hello]
 
 
-Repository Structure
+##Repository Structure
 ├── app/
-
 │   └── main.py          # Flask application code
 ├── Dockerfile           # Docker image definition
 ├── manifests/
