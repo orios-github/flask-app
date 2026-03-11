@@ -21,7 +21,8 @@ flowchart TD
 [GitHub Repo] --> [Jenkins CI/CD] --> [Docker Image] --> [AWS EKS Cluster] --> [ArgoCD Deployment] --> [Flask API /hello]
 
 
-Repository Structure
+Repository Structure  
+
 ├── app/  
 
 │   └── main.py          # Flask application code  
