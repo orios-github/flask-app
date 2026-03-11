@@ -64,6 +64,4 @@ This project demonstrates hands-on expertise in:
 It serves as a practical showcase of automation, reliability, and modern cloud-native deployment practices—ideal for recruiters and interview discussions.
 
 
-
-<img width="724" height="475" alt="image" src="https://github.com/user-attachments/assets/3b4faf97-a109-4170-8336-a7b7eb317030" />
 <img width="812" height="541" alt="AWS EC2-DevOps-Diagram" src="https://github.com/user-attachments/assets/15faeb60-687b-4477-bf03-b1655901f857" />
