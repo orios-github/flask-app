@@ -23,6 +23,7 @@ flowchart TD
 
 Repository Structure
 ├── app/
+
 │   └── main.py          # Flask application code
 ├── Dockerfile           # Docker image definition
 ├── manifests/
